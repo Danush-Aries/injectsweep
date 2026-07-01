@@ -1,0 +1,54 @@
+name: "injectsweep"
+description: "Static pre-ingestion scan for prompt-injection payloads hidden in RAG documents (OWASP LLM01). Emits SARIF for GitHub code scanning."
+author: "Dhanush Shankar"
+branding:
+  icon: "shield"
+  color: "purple"
+
+inputs:
+  path:
+    description: "File or directory to scan."
+    required: false
+    default: "."
+  fail-on:
+    description: "Fail the job if any finding is at/above this severity (info|low|medium|high|critical). Empty = report only."
+    required: false
+    default: "high"
+  sarif-file:
+    description: "Where to write the SARIF report."
+    required: false
+    default: "injectsweep.sarif"
+
+outputs:
+  sarif-file:
+    description: "Path to the generated SARIF report."
+    value: ${{ inputs.sarif-file }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install injectsweep
+      shell: bash
+      run: python -m pip install --quiet "injectsweep @ git+https://github.com/Danush-Aries/injectsweep@main"
+
+    - name: Run injectsweep (SARIF)
+      shell: bash
+      env:
+        ISW_PATH: ${{ inputs.path }}
+        ISW_SARIF: ${{ inputs.sarif-file }}
+      run: injectsweep scan "$ISW_PATH" --format sarif --output "$ISW_SARIF"
+
+    - name: Enforce severity gate
+      shell: bash
+      env:
+        ISW_PATH: ${{ inputs.path }}
+        ISW_FAIL_ON: ${{ inputs.fail-on }}
+      run: |
+        if [ -n "$ISW_FAIL_ON" ]; then
+          injectsweep scan "$ISW_PATH" --fail-on "$ISW_FAIL_ON" --format table
+        fi

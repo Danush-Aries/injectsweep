@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install (with dev extras)
+        run: python -m pip install -e ".[dev]"
+      - name: Run test suite
+        run: python -m pytest -q
+
+  self-scan:
+    # Dogfood: scan the example corpus and upload SARIF to GitHub code scanning.
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install injectsweep
+        run: python -m pip install -e .
+      - name: Scan corpus -> SARIF
+        run: injectsweep scan corpus/ --format sarif --output injectsweep.sarif
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: injectsweep.sarif
+        continue-on-error: true

@@ -1,0 +1,5 @@
+# Runtime dependencies for injectsweep (offline, no API keys, no network).
+pypdf>=4.0
+beautifulsoup4>=4.11
+python-docx>=1.0
+rich>=13.0

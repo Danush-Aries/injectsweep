@@ -1,0 +1,73 @@
+{
+  "resume_whitetext.pdf": [
+    "ISW020"
+  ],
+  "invoice_annotation.pdf": [
+    "ISW020"
+  ],
+  "onboarding.docx": [
+    "ISW014",
+    "ISW020"
+  ],
+  "policy_meta.docx": [
+    "ISW020"
+  ],
+  "kb_article_comment.html": [
+    "ISW010",
+    "ISW020"
+  ],
+  "product_page_whitetext.html": [
+    "ISW011",
+    "ISW020"
+  ],
+  "blog_tinyfont.html": [
+    "ISW012",
+    "ISW020"
+  ],
+  "landing_offscreen.html": [
+    "ISW013",
+    "ISW020"
+  ],
+  "faq_homoglyph.md": [
+    "ISW005"
+  ],
+  "notes_base64.md": [
+    "ISW041"
+  ],
+  "readme_rot13.md": [
+    "ISW041"
+  ],
+  "nested_deep.md": [
+    "ISW041"
+  ],
+  "memo_exfil.md": [
+    "ISW030"
+  ],
+  "customers.csv": [
+    "ISW002"
+  ],
+  "records.csv": [
+    "ISW020"
+  ],
+  "support_zerowidth.txt": [
+    "ISW001"
+  ],
+  "contract_tagsmuggle.txt": [
+    "ISW002"
+  ],
+  "review_bidi.txt": [
+    "ISW003"
+  ],
+  "announcement_varsel.txt": [
+    "ISW004"
+  ],
+  "data_hex.txt": [
+    "ISW041"
+  ],
+  "clean_resume.pdf": [],
+  "clean_memo.docx": [],
+  "clean_article.html": [],
+  "clean_notes.md": [],
+  "clean_data.csv": [],
+  "clean_readme.txt": []
+}
